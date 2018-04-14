@@ -31,7 +31,7 @@ namespace Rowa.Api.Controllers
             var newUser = new Repository.Models.User
             {
                 Username = userModel.Username,
-                Password = userModel.Password
+                Password = _commonMethods.EncryptPassword(userModel.Password)
             };
 
             return Ok(_userRepository.Add(newUser));
