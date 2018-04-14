@@ -12,11 +12,13 @@ namespace Rowa.Api.Controllers
     {
         private IUserRepository _userRepository;
         private ICommonMethods _commonMethods;
+        private IUserInformationRepository _userInformationRepository;
 
-        public UserController(IUserRepository userRepository, ICommonMethods commonMethods)
+        public UserController(IUserRepository userRepository, ICommonMethods commonMethods, IUserInformationRepository userInformationRepository)
         {
             _userRepository = userRepository;
             _commonMethods = commonMethods;
+            _userInformationRepository = userInformationRepository;
         }
 
         [HttpGet]
@@ -34,7 +36,19 @@ namespace Rowa.Api.Controllers
                 Password = _commonMethods.EncryptPassword(userModel.Password)
             };
 
-            return Ok(_userRepository.Add(newUser));
+            _userRepository.Add(newUser);
+
+            var userInfo = new Repository.Models.UserInformation
+            {
+                FirstName = userModel.FirstName,
+                LastName = userModel.LastName,
+                EmailAddress = userModel.EmailAddress,
+                UserId = newUser.Id
+            };
+
+            _userInformationRepository.Add(userInfo);
+
+            return Ok("Created user");
         }
     }
 }

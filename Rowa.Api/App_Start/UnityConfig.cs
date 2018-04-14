@@ -45,6 +45,7 @@ namespace Rowa.Api
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<ICommonMethods, CommonMethods>();
             container.RegisterType<IQueries, Queries>();
+            container.RegisterType<IUserInformationRepository, UserInformationRepository>();
         }
     }
 }
