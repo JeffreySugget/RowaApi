@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using Rowa.Repository.Interfaces;
 using Rowa.Api.Models;
+using System.Net.Http;
 
 namespace Rowa.Api.Controllers
 {
@@ -36,8 +37,18 @@ namespace Rowa.Api.Controllers
                 Password = _commonMethods.EncryptPassword(userModel.Password)
             };
 
-            _userRepository.Add(newUser);
+            try
+            {
+                _userRepository.Add(newUser);
 
+            }
+            catch (Exception ex)
+            {
+                throw new HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent($"Error creating user: {ex.Message}")
+                });
+            }
             var userInfo = new Repository.Models.UserInformation
             {
                 FirstName = userModel.FirstName,
@@ -46,7 +57,17 @@ namespace Rowa.Api.Controllers
                 UserId = newUser.Id
             };
 
-            _userInformationRepository.Add(userInfo);
+            try
+            {
+                _userInformationRepository.Add(userInfo);
+            }
+            catch (Exception ex)
+            {
+                throw new HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent($"Error adding user information: {ex.Message}")
+                });
+            }
 
             return Ok("Created user");
         }
