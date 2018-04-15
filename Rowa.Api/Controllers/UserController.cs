@@ -9,6 +9,7 @@ using System.Net.Http;
 
 namespace Rowa.Api.Controllers
 {
+    [RoutePrefix("api/user")]
     public class UserController : ApiController
     {
         private IUserRepository _userRepository;
@@ -23,12 +24,44 @@ namespace Rowa.Api.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetUser()
+        [Route("checkuser")]
+        public IHttpActionResult CheckUser(string userName, string emailAddress)
         {
-            return Ok("This will get a user");
+            var user = _userRepository.GetUserProfile(userName, emailAddress);
+
+            if (user != null)
+            {
+                return Ok(true);
+            }
+
+            return Ok(false);
         }
 
         [HttpPost]
+        [Route("resetpassword")]
+        public IHttpActionResult ResetPassword([FromBody] UserModel userModel)
+        {
+            var user = _userRepository.GetUser(userModel.Username);
+
+            user.Password = _commonMethods.EncryptPassword(userModel.Password);
+
+            try
+            {
+                _userRepository.Update(user);
+            }
+            catch (Exception ex)
+            {
+                throw new HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent($"Error updating password: {ex.Message}")
+                });
+            }
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("createuser")]
         public IHttpActionResult CreateUser([FromBody] UserModel userModel)
         {
             var newUser = new Repository.Models.User
