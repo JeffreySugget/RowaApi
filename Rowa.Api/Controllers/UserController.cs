@@ -23,11 +23,11 @@ namespace Rowa.Api.Controllers
             _userInformationRepository = userInformationRepository;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("checkuser")]
-        public IHttpActionResult CheckUser(string userName, string emailAddress)
+        public IHttpActionResult CheckUser([FromBody] UserModel userModel)
         {
-            var user = _userRepository.GetUserProfile(userName, emailAddress);
+            var user = _userRepository.GetUserProfile(userModel.Username, userModel.EmailAddress);
 
             if (user != null)
             {
