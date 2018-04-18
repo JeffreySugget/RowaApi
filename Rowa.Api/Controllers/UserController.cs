@@ -97,8 +97,8 @@ namespace Rowa.Api.Controllers
         }
 
         [HttpPost]
-        [Route("gettoken")]
-        public IHttpActionResult GetToken([FromBody] UserModel userModel)
+        [Route("loginuser")]
+        public IHttpActionResult LoginUser([FromBody] UserModel userModel)
         {
             if (CheckUserInDatabase(userModel))
             {
