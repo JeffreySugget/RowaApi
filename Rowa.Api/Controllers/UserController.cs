@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
 using Rowa.Repository.Interfaces;
 using Rowa.Api.Models;
 using System.Net.Http;
+using Rowa.Api.Classes;
 
 namespace Rowa.Api.Controllers
 {
@@ -27,14 +25,7 @@ namespace Rowa.Api.Controllers
         [Route("checkuser")]
         public IHttpActionResult CheckUser([FromBody] UserModel userModel)
         {
-            var user = _userRepository.GetUserProfile(userModel.Username, userModel.EmailAddress);
-
-            if (user != null)
-            {
-                return Ok(true);
-            }
-
-            return Ok(false);
+            return Ok(CheckUserInDatabase(userModel));
         }
 
         [HttpPost]
@@ -103,6 +94,30 @@ namespace Rowa.Api.Controllers
             }
 
             return Ok("Created user");
+        }
+
+        [HttpPost]
+        [Route("gettoken")]
+        public IHttpActionResult GetToken([FromBody] UserModel userModel)
+        {
+            if (CheckUserInDatabase(userModel))
+            {
+                return Ok(JwtManager.GenerateToken(userModel.Username));
+            }
+
+            throw new HttpResponseException(System.Net.HttpStatusCode.Unauthorized);
+        }
+
+        private bool CheckUserInDatabase(UserModel userModel)
+        {
+            var user = _userRepository.GetUserProfile(userModel.Username, userModel.EmailAddress);
+
+            if (user != null)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
