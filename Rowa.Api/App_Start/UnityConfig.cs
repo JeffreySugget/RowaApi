@@ -1,7 +1,7 @@
 using System;
-using Rowa.Repository.Classes;
-using Rowa.Repository.Interfaces;
-using Rowa.Repository.Repositories;
+using Rowa.Api.Classes;
+using Rowa.Api.Interfaces;
+using Rowa.Api.Repositories;
 using Unity;
 
 namespace Rowa.Api

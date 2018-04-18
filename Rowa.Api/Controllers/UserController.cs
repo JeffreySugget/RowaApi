@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Web.Http;
-using Rowa.Repository.Interfaces;
+using Rowa.Api.Interfaces;
 using Rowa.Api.Models;
 using System.Net.Http;
 using Rowa.Api.Classes;
+using Rowa.Api.Entities;
 
 namespace Rowa.Api.Controllers
 {
@@ -55,7 +56,7 @@ namespace Rowa.Api.Controllers
         [Route("createuser")]
         public IHttpActionResult CreateUser([FromBody] UserModel userModel)
         {
-            var newUser = new Repository.Models.User
+            var newUser = new User
             {
                 Username = userModel.Username,
                 Password = _commonMethods.EncryptPassword(userModel.Password)
@@ -73,11 +74,11 @@ namespace Rowa.Api.Controllers
                     Content = new StringContent($"Error creating user: {ex.Message}")
                 });
             }
-            var userInfo = new Repository.Models.UserInformation
+            var userInfo = new UserInformation
             {
                 FirstName = userModel.FirstName,
                 LastName = userModel.LastName,
-                EmailAddress = userModel.EmailAddress,
+                Email = userModel.EmailAddress,
                 UserId = newUser.Id
             };
 
