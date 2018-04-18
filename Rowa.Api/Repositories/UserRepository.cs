@@ -20,8 +20,6 @@ namespace Rowa.Api.Repositories
 
         public User GetUser(string username)
         {
-            //var user = DatabaseContext.Database.SqlQuery<User>(_queries.GetUser, new SqlParameter("@Username", username)).FirstOrDefault();
-
             return DatabaseContext.Users.FirstOrDefault(x => x.Username == username);
         }
 
