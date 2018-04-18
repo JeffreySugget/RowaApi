@@ -46,6 +46,8 @@ namespace Rowa.Api
             container.RegisterType<ICommonMethods, CommonMethods>();
             container.RegisterType<IQueries, Queries>();
             container.RegisterType<IUserInformationRepository, UserInformationRepository>();
+            container.RegisterType<IConfigurationHelper, ConfigurationHelper>();
+            container.RegisterType<IJwtManager, JwtManager>();
         }
     }
 }

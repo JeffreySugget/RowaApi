@@ -236,6 +236,7 @@
     </Compile>
     <Compile Include="Interfaces\ICommonMethods.cs" />
     <Compile Include="Interfaces\IConfigurationHelper.cs" />
+    <Compile Include="Interfaces\IJwtManager.cs" />
     <Compile Include="Interfaces\IQueries.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUserInformationRepository.cs" />

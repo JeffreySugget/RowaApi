@@ -14,12 +14,14 @@ namespace Rowa.Api.Controllers
         private IUserRepository _userRepository;
         private ICommonMethods _commonMethods;
         private IUserInformationRepository _userInformationRepository;
+        private IJwtManager _jwtManager;
 
-        public UserController(IUserRepository userRepository, ICommonMethods commonMethods, IUserInformationRepository userInformationRepository)
+        public UserController(IUserRepository userRepository, ICommonMethods commonMethods, IUserInformationRepository userInformationRepository, IJwtManager jwtManager)
         {
             _userRepository = userRepository;
             _commonMethods = commonMethods;
             _userInformationRepository = userInformationRepository;
+            _jwtManager = jwtManager;
         }
 
         [HttpPost]
@@ -103,7 +105,7 @@ namespace Rowa.Api.Controllers
         {
             if (CheckUserInDatabase(userModel))
             {
-                return Ok(JwtManager.GenerateToken(userModel.Username));
+                return Ok(_jwtManager.GenerateToken(userModel.Username));
             }
 
             throw new HttpResponseException(System.Net.HttpStatusCode.Unauthorized);

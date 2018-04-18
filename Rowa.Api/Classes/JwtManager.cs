@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using Rowa.Api.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -8,11 +9,18 @@ using System.Web;
 
 namespace Rowa.Api.Classes
 {
-    public static class JwtManager
+    public class JwtManager : IJwtManager
     {
+        private readonly IConfigurationHelper _configurationHelper;
+
+        public JwtManager(IConfigurationHelper configurationHelper)
+        {
+            _configurationHelper = configurationHelper;
+        }
+
         private const string Secret = "";
 
-        public static string GenerateToken(string username)
+        public string GenerateToken(string username)
         {
             var symmetricKey = Convert.FromBase64String(Secret);
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -23,7 +31,7 @@ namespace Rowa.Api.Classes
                 {
                     new Claim(ClaimTypes.Name, username)
                 }),
-                Expires = DateTime.Now.AddMinutes(20), 
+                Expires = DateTime.Now.AddMinutes(Convert.ToInt32(_configurationHelper.JwtExpireTime)), 
 
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(symmetricKey), SecurityAlgorithms.HmacSha256Signature)
             };
