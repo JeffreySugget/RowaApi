@@ -105,7 +105,13 @@ namespace Rowa.Api.Controllers
         {
             if (CheckUserInDatabase(userModel))
             {
-                return Ok(_jwtManager.GenerateToken(userModel.Username));
+                var currentUser = new CurrentUser
+                {
+                    Username = userModel.Username,
+                    Token = _jwtManager.GenerateToken(userModel.Username)
+                };
+
+                return Ok(currentUser);
             }
 
             throw new HttpResponseException(System.Net.HttpStatusCode.Unauthorized);
