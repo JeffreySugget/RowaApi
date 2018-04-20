@@ -229,6 +229,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DatabaseContext.cs" />
+    <Compile Include="Entities\Secret.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserInformation.cs" />
     <Compile Include="Global.asax.cs">
@@ -245,7 +246,12 @@
     <Compile Include="Migrations\201804181219179_Initial Migration.Designer.cs">
       <DependentUpon>201804181219179_Initial Migration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804202301305_Create secret table.cs" />
+    <Compile Include="Migrations\201804202301305_Create secret table.Designer.cs">
+      <DependentUpon>201804202301305_Create secret table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserProfileModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -326,6 +332,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201804181219179_Initial Migration.resx">
       <DependentUpon>201804181219179_Initial Migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804202301305_Create secret table.resx">
+      <DependentUpon>201804202301305_Create secret table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
