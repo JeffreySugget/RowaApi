@@ -31,5 +31,10 @@ namespace Rowa.Api.Repositories
 
             return userProfile;
         }
+
+        public User LoginUser(string username, string password)
+        {
+            return DatabaseContext.Users.FirstOrDefault(x => string.Equals(username, x.Username) && string.Equals(password, x.Password));
+        }
     }
 }

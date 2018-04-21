@@ -240,6 +240,7 @@
     <Compile Include="Interfaces\IJwtManager.cs" />
     <Compile Include="Interfaces\IQueries.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\ISecretRepository.cs" />
     <Compile Include="Interfaces\IUserInformationRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Migrations\201804181219179_Initial Migration.cs" />
@@ -258,6 +259,7 @@
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\CommonMethods.cs" />
     <Compile Include="Repositories\Queries.cs" />
+    <Compile Include="Repositories\SecretRepository.cs" />
     <Compile Include="Repositories\UserInformationRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>

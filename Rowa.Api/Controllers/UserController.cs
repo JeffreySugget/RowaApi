@@ -103,7 +103,7 @@ namespace Rowa.Api.Controllers
         [Route("loginuser")]
         public IHttpActionResult LoginUser([FromBody] UserModel userModel)
         {
-            if (CheckUserInDatabase(userModel))
+            if (CheckUserForLogin(userModel))
             {
                 var currentUser = new CurrentUser
                 {
@@ -115,6 +115,18 @@ namespace Rowa.Api.Controllers
             }
 
             throw new HttpResponseException(System.Net.HttpStatusCode.Unauthorized);
+        }
+
+        private bool CheckUserForLogin(UserModel userModel)
+        {
+            var user = _userRepository.LoginUser(userModel.Username, _commonMethods.EncryptPassword(userModel.Password));
+
+            if (user != null)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private bool CheckUserInDatabase(UserModel userModel)

@@ -12,17 +12,18 @@ namespace Rowa.Api.Classes
     public class JwtManager : IJwtManager
     {
         private readonly IConfigurationHelper _configurationHelper;
+        private readonly ISecretRepository _secretRepository;
 
-        public JwtManager(IConfigurationHelper configurationHelper)
+        public JwtManager(IConfigurationHelper configurationHelper, ISecretRepository secretRepository)
         {
             _configurationHelper = configurationHelper;
+            _secretRepository = secretRepository;
         }
-
-        private const string Secret = "";
 
         public string GenerateToken(string username)
         {
-            var symmetricKey = Convert.FromBase64String(Secret);
+            var secret = _secretRepository.GetSecret();
+            var symmetricKey = Convert.FromBase64String(secret);
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var tokenDescriptor = new SecurityTokenDescriptor
