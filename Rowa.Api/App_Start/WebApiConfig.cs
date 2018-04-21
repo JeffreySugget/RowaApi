@@ -10,6 +10,9 @@ namespace Rowa.Api
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            config.Filters.Add(new AuthorizeAttribute());
+
+            config.EnableCors();
 
             // Web API routes
             config.MapHttpAttributeRoutes();

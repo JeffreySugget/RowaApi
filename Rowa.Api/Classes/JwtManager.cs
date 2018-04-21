@@ -2,6 +2,7 @@
 using Rowa.Api.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -9,20 +10,10 @@ using System.Web;
 
 namespace Rowa.Api.Classes
 {
-    public class JwtManager : IJwtManager
+    public static class JwtManager
     {
-        private readonly IConfigurationHelper _configurationHelper;
-        private readonly ISecretRepository _secretRepository;
-
-        public JwtManager(IConfigurationHelper configurationHelper, ISecretRepository secretRepository)
+        public static string GenerateToken(string username, string secret)
         {
-            _configurationHelper = configurationHelper;
-            _secretRepository = secretRepository;
-        }
-
-        public string GenerateToken(string username)
-        {
-            var secret = _secretRepository.GetSecret();
             var symmetricKey = Convert.FromBase64String(secret);
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -32,7 +23,7 @@ namespace Rowa.Api.Classes
                 {
                     new Claim(ClaimTypes.Name, username)
                 }),
-                Expires = DateTime.Now.AddMinutes(Convert.ToInt32(_configurationHelper.JwtExpireTime)), 
+                Expires = DateTime.Now.AddMinutes(Convert.ToInt32(ConfigurationManager.AppSettings["JwtExpireTime"])), 
 
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(symmetricKey), SecurityAlgorithms.HmacSha256Signature)
             };
@@ -41,6 +32,38 @@ namespace Rowa.Api.Classes
             var token = tokenHandler.WriteToken(tempToken);
 
             return token;
+        }
+
+        public static ClaimsPrincipal GetPrincipal(string token, string secret)
+        {
+            try
+            { 
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var jwtToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
+
+                if (jwtToken == null)
+                    return null;
+
+                var symmetricKey = Convert.FromBase64String(secret);
+
+                var validationParameters = new TokenValidationParameters()
+                {
+                    RequireExpirationTime = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    IssuerSigningKey = new SymmetricSecurityKey(symmetricKey)
+                };
+
+                SecurityToken securityToken;
+                var principal = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
+
+                return principal;
+            }
+
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

@@ -5,23 +5,26 @@ using Rowa.Api.Models;
 using System.Net.Http;
 using Rowa.Api.Classes;
 using Rowa.Api.Entities;
+using Rowa.Api.Filters;
+using System.Web.Http.Cors;
 
 namespace Rowa.Api.Controllers
 {
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     [RoutePrefix("api/user")]
     public class UserController : ApiController
     {
         private IUserRepository _userRepository;
         private ICommonMethods _commonMethods;
         private IUserInformationRepository _userInformationRepository;
-        private IJwtManager _jwtManager;
+        private ISecretRepository _secretRepository;
 
-        public UserController(IUserRepository userRepository, ICommonMethods commonMethods, IUserInformationRepository userInformationRepository, IJwtManager jwtManager)
+        public UserController(IUserRepository userRepository, ICommonMethods commonMethods, IUserInformationRepository userInformationRepository, ISecretRepository secretRepository)
         {
             _userRepository = userRepository;
             _commonMethods = commonMethods;
             _userInformationRepository = userInformationRepository;
-            _jwtManager = jwtManager;
+            _secretRepository = secretRepository;
         }
 
         [HttpPost]
@@ -33,6 +36,7 @@ namespace Rowa.Api.Controllers
 
         [HttpPost]
         [Route("resetpassword")]
+        [AllowAnonymous]
         public IHttpActionResult ResetPassword([FromBody] UserModel userModel)
         {
             var user = _userRepository.GetUser(userModel.Username);
@@ -56,6 +60,7 @@ namespace Rowa.Api.Controllers
 
         [HttpPost]
         [Route("createuser")]
+        [AllowAnonymous]
         public IHttpActionResult CreateUser([FromBody] UserModel userModel)
         {
             var newUser = new User
@@ -101,6 +106,7 @@ namespace Rowa.Api.Controllers
 
         [HttpPost]
         [Route("loginuser")]
+        [AllowAnonymous]
         public IHttpActionResult LoginUser([FromBody] UserModel userModel)
         {
             if (CheckUserForLogin(userModel))
@@ -108,7 +114,7 @@ namespace Rowa.Api.Controllers
                 var currentUser = new CurrentUser
                 {
                     Username = userModel.Username,
-                    Token = _jwtManager.GenerateToken(userModel.Username)
+                    Token = JwtManager.GenerateToken(userModel.Username, _secretRepository.GetSecret())
                 };
 
                 return Ok(currentUser);
