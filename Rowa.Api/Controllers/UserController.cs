@@ -117,10 +117,23 @@ namespace Rowa.Api.Controllers
                     Token = JwtManager.GenerateToken(userModel.Username, _secretRepository.GetSecret())
                 };
 
+                UpdateLastLoginDate(userModel.Username);
+
                 return Ok(currentUser);
             }
 
             throw new HttpResponseException(System.Net.HttpStatusCode.Unauthorized);
+        }
+
+        private void UpdateLastLoginDate(string username)
+        {
+            var user = _userRepository.GetUser(username);
+
+            if (user != null)
+            {
+                user.LastLogonDate = DateTime.Now;
+                _userRepository.Update(user);
+            }
         }
 
         private bool CheckUserForLogin(UserModel userModel)
