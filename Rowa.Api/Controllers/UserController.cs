@@ -30,12 +30,12 @@ namespace Rowa.Api.Controllers
             _secretRepository = secretRepository;
         }
 
-        [HttpPost]
-        [Route("checkuser")]
-        public IHttpActionResult CheckUser([FromBody] UserModel userModel)
-        {
-            return Ok(CheckUserInDatabase(userModel));
-        }
+        //[HttpPost]
+        //[Route("checkuser")]
+        //public IHttpActionResult CheckUser([FromBody] UserModel userModel)
+        //{
+        //    return Ok(CheckUserInDatabase(userModel));
+        //}
 
         [HttpPost]
         [Route("updateprofilepic")]
@@ -49,7 +49,11 @@ namespace Rowa.Api.Controllers
                 return Ok(HttpStatusCode.NoContent);
             }
 
-            profilePic.SaveAs(Path.Combine("C:\\inetpub\\Rowa\\assets\\images", profilePic.FileName));
+            var path = Path.Combine("C:\\inetpub\\Rowa\\assets\\images", profilePic.FileName);
+
+            profilePic.SaveAs(path);
+
+            UpdateUserProfilePicPath(profilePic.FileName.Split('-')[0], path);
 
             return Ok();
         }
@@ -156,6 +160,14 @@ namespace Rowa.Api.Controllers
             }
         }
 
+        private void UpdateUserProfilePicPath(string username, string path)
+        {
+            var userInfo = _userInformationRepository.GetUserInformation(_userRepository.GetUserId(username));
+            userInfo.ProfilePicPath = path;
+
+            _userInformationRepository.Update(userInfo);
+        }
+
         private bool CheckUserForLogin(UserModel userModel)
         {
             var user = _userRepository.LoginUser(userModel.Username, _commonMethods.EncryptPassword(userModel.Password));
@@ -168,16 +180,16 @@ namespace Rowa.Api.Controllers
             return false;
         }
 
-        private bool CheckUserInDatabase(UserModel userModel)
-        {
-            var user = _userRepository.GetUserProfile(userModel.Username, userModel.EmailAddress);
+        //private bool CheckUserInDatabase(UserModel userModel)
+        //{
+        //    var user = _userRepository.GetUserProfile(userModel.Username, userModel.EmailAddress);
 
-            if (user != null)
-            {
-                return true;
-            }
+        //    if (user != null)
+        //    {
+        //        return true;
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
     }
 }

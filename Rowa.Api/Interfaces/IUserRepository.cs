@@ -12,8 +12,10 @@ namespace Rowa.Api.Interfaces
     {
         User GetUser(string username);
 
-        UserProfileModel GetUserProfile(string username, string password);
+        UserProfileModel GetUserProfile(string username);
 
         User LoginUser(string username, string password);
+
+        int GetUserId(string username);
     }
 }

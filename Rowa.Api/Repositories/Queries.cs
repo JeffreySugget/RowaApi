@@ -12,8 +12,9 @@ namespace Rowa.Api.Repositories
                                                 ,Email
                                                 ,FirstName
                                                 ,LastName
+                                                ,ProfilePicPath
                                         FROM [User] u
                                         INNER JOIN UserInformation ui on u.Id = ui.UserId
-                                        WHERE Username=@Username AND Email=@Email";
+                                        WHERE Username=@Username";
     }
 }

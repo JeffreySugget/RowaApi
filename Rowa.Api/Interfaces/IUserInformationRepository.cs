@@ -9,5 +9,6 @@ namespace Rowa.Api.Interfaces
 {
     public interface IUserInformationRepository : IRepository<UserInformation>
     {
+        UserInformation GetUserInformation(int userId);
     }
 }

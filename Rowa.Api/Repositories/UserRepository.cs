@@ -23,11 +23,10 @@ namespace Rowa.Api.Repositories
             return DatabaseContext.Users.FirstOrDefault(x => x.Username == username);
         }
 
-        public UserProfileModel GetUserProfile(string username, string email)
+        public UserProfileModel GetUserProfile(string username)
         {
             var userProfile = DatabaseContext.Database.SqlQuery<UserProfileModel>(_queries.GetUserProfile, 
-                new SqlParameter("@Username", username), 
-                new SqlParameter("@Email", email)).FirstOrDefault();
+                new SqlParameter("@Username", username)).FirstOrDefault();
 
             return userProfile;
         }
@@ -35,6 +34,11 @@ namespace Rowa.Api.Repositories
         public User LoginUser(string username, string password)
         {
             return DatabaseContext.Users.FirstOrDefault(x => string.Equals(username, x.Username) && string.Equals(password, x.Password));
+        }
+
+        public int GetUserId(string username)
+        {
+            return DatabaseContext.Users.FirstOrDefault(x => x.Username == username).Id;
         }
     }
 }
