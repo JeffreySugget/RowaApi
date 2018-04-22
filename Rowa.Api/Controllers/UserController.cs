@@ -30,12 +30,13 @@ namespace Rowa.Api.Controllers
             _secretRepository = secretRepository;
         }
 
-        //[HttpPost]
-        //[Route("checkuser")]
-        //public IHttpActionResult CheckUser([FromBody] UserModel userModel)
-        //{
-        //    return Ok(CheckUserInDatabase(userModel));
-        //}
+        [HttpPost]
+        [Route("checkuser")]
+        [AllowAnonymous]
+        public IHttpActionResult CheckUser([FromBody] UserModel userModel)
+        {
+            return Ok(CheckUserInDatabase(userModel));
+        }
 
         [HttpPost]
         [Route("updateprofilepic")]
@@ -180,16 +181,16 @@ namespace Rowa.Api.Controllers
             return false;
         }
 
-        //private bool CheckUserInDatabase(UserModel userModel)
-        //{
-        //    var user = _userRepository.GetUserProfile(userModel.Username, userModel.EmailAddress);
+        private bool CheckUserInDatabase(UserModel userModel)
+        {
+            var user = _userRepository.CheckUserForPasswordReset(userModel.Username, userModel.EmailAddress);
 
-        //    if (user != null)
-        //    {
-        //        return true;
-        //    }
+            if (user != null)
+            {
+                return true;
+            }
 
-        //    return false;
-        //}
+            return false;
+        }
     }
 }
