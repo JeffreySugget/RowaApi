@@ -273,6 +273,10 @@
     <Compile Include="Migrations\201804220258174_Add First Login Column to User Table.Designer.cs">
       <DependentUpon>201804220258174_Add First Login Column to User Table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804220734394_Added profile pic path column.cs" />
+    <Compile Include="Migrations\201804220734394_Added profile pic path column.Designer.cs">
+      <DependentUpon>201804220734394_Added profile pic path column.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -362,6 +366,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804220258174_Add First Login Column to User Table.resx">
       <DependentUpon>201804220258174_Add First Login Column to User Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804220734394_Added profile pic path column.resx">
+      <DependentUpon>201804220734394_Added profile pic path column.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
