@@ -14,5 +14,7 @@ namespace Rowa.Api.Entities
         public string Password { get; set; }
 
         public DateTime? LastLogonDate { get; set; }
+
+        public bool FirstLogin { get; set; }
     }
 }
