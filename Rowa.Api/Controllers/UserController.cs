@@ -7,6 +7,9 @@ using Rowa.Api.Classes;
 using Rowa.Api.Entities;
 using Rowa.Api.Filters;
 using System.Web.Http.Cors;
+using System.Web;
+using System.Net;
+using System.IO;
 
 namespace Rowa.Api.Controllers
 {
@@ -32,6 +35,23 @@ namespace Rowa.Api.Controllers
         public IHttpActionResult CheckUser([FromBody] UserModel userModel)
         {
             return Ok(CheckUserInDatabase(userModel));
+        }
+
+        [HttpPost]
+        [Route("updateprofilepic")]
+        [JwtAuthentication]
+        public IHttpActionResult UpdateProfilePicture()
+        {
+            var profilePic = HttpContext.Current.Request.Files["profilePic"];
+
+            if (profilePic == null)
+            {
+                return Ok(HttpStatusCode.NoContent);
+            }
+
+            profilePic.SaveAs(Path.Combine("C:\\inetpub\\Rowa\\assets\\images", profilePic.FileName));
+
+            return Ok();
         }
 
         [HttpPost]
@@ -122,7 +142,7 @@ namespace Rowa.Api.Controllers
                 return Ok(currentUser);
             }
 
-            throw new HttpResponseException(System.Net.HttpStatusCode.Unauthorized);
+            throw new HttpResponseException(HttpStatusCode.Unauthorized);
         }
 
         private void UpdateLastLoginDate(string username)
