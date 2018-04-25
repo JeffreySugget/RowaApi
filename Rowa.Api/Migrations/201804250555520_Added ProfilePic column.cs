@@ -3,16 +3,16 @@ namespace Rowa.Api.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Addedprofilepicpathcolumn : DbMigration
+    public partial class AddedProfilePiccolumn : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.UserInformation", "ProfilePicPath", c => c.String());
+            AddColumn("dbo.UserInformation", "ProfilePic", c => c.Binary());
         }
         
         public override void Down()
         {
-            DropColumn("dbo.UserInformation", "ProfilePicPath");
+            DropColumn("dbo.UserInformation", "ProfilePic");
         }
     }
 }

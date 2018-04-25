@@ -9,5 +9,7 @@ namespace Rowa.Api.Interfaces
     public interface ICommonMethods
     {
         string EncryptPassword(string password);
+
+        string GetUsernameFromToken();
     }
 }

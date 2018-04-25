@@ -15,7 +15,7 @@ namespace Rowa.Api.Entities
 
         public string Email { get; set; }
 
-        public string ProfilePicPath { get; set; }
+        public byte[] ProfilePic { get; set; }
 
         public int UserId { get; set; }
 

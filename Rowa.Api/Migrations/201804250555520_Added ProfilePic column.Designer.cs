@@ -7,13 +7,13 @@ namespace Rowa.Api.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Addedprofilepicpathcolumn : IMigrationMetadata
+    public sealed partial class AddedProfilePiccolumn : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Addedprofilepicpathcolumn));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedProfilePiccolumn));
         
         string IMigrationMetadata.Id
         {
-            get { return "201804220734394_Added profile pic path column"; }
+            get { return "201804250555520_Added ProfilePic column"; }
         }
         
         string IMigrationMetadata.Source

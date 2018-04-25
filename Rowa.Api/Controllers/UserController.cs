@@ -10,6 +10,7 @@ using System.Web.Http.Cors;
 using System.Web;
 using System.Net;
 using System.IO;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Rowa.Api.Controllers
 {
@@ -45,16 +46,20 @@ namespace Rowa.Api.Controllers
         {
             var profilePic = HttpContext.Current.Request.Files["profilePic"];
 
+            var username = _commonMethods.GetUsernameFromToken();
+
             if (profilePic == null)
             {
                 return Ok(HttpStatusCode.NoContent);
             }
 
-            var path = Path.Combine("C:\\inetpub\\Rowa\\assets\\images", profilePic.FileName);
+            var path = Path.Combine("C:\\ProfilePics", profilePic.FileName);
 
             profilePic.SaveAs(path);
 
-            UpdateUserProfilePicPath(profilePic.FileName.Split('-')[0], path);
+            AddProfilePicToDatabase(path, username);
+
+            File.Delete(path);
 
             return Ok();
         }
@@ -150,6 +155,41 @@ namespace Rowa.Api.Controllers
             throw new HttpResponseException(HttpStatusCode.Unauthorized);
         }
 
+        [HttpGet]
+        [Route("getprofilepic")]
+        [JwtAuthentication]
+        public HttpResponseMessage GetProfilePic()
+        {
+            var profilePic = _userInformationRepository.GetUserInformation(_userRepository.GetUserId(_commonMethods.GetUsernameFromToken())).ProfilePic;
+
+            var ms = new MemoryStream(profilePic);
+
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StreamContent(ms)
+            };
+
+            response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
+
+            return response;
+        }
+
+        private void AddProfilePicToDatabase(string filePath, string username)
+        {
+            var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            var reader = new BinaryReader(fs);
+
+            var photo = reader.ReadBytes((int)fs.Length);
+
+            reader.Close();
+            fs.Close();
+
+            var ui = _userInformationRepository.GetUserInformation(_userRepository.GetUserId(username));
+            ui.ProfilePic = photo;
+
+            _userInformationRepository.Update(ui);
+        }
+
         private void UpdateLastLoginDate(string username)
         {
             var user = _userRepository.GetUser(username);
@@ -159,14 +199,6 @@ namespace Rowa.Api.Controllers
                 user.LastLogonDate = DateTime.Now;
                 _userRepository.Update(user);
             }
-        }
-
-        private void UpdateUserProfilePicPath(string username, string path)
-        {
-            var userInfo = _userInformationRepository.GetUserInformation(_userRepository.GetUserId(username));
-            userInfo.ProfilePicPath = path;
-
-            _userInformationRepository.Update(userInfo);
         }
 
         private bool CheckUserForLogin(UserModel userModel)

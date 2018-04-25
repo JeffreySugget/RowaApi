@@ -273,9 +273,9 @@
     <Compile Include="Migrations\201804220258174_Add First Login Column to User Table.Designer.cs">
       <DependentUpon>201804220258174_Add First Login Column to User Table.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201804220734394_Added profile pic path column.cs" />
-    <Compile Include="Migrations\201804220734394_Added profile pic path column.Designer.cs">
-      <DependentUpon>201804220734394_Added profile pic path column.cs</DependentUpon>
+    <Compile Include="Migrations\201804250555520_Added ProfilePic column.cs" />
+    <Compile Include="Migrations\201804250555520_Added ProfilePic column.Designer.cs">
+      <DependentUpon>201804250555520_Added ProfilePic column.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CurrentUser.cs" />
@@ -283,7 +283,7 @@
     <Compile Include="Models\UserProfileModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
-    <Compile Include="Repositories\CommonMethods.cs" />
+    <Compile Include="Classes\CommonMethods.cs" />
     <Compile Include="Repositories\Queries.cs" />
     <Compile Include="Repositories\SecretRepository.cs" />
     <Compile Include="Repositories\UserInformationRepository.cs" />
@@ -367,8 +367,8 @@
     <EmbeddedResource Include="Migrations\201804220258174_Add First Login Column to User Table.resx">
       <DependentUpon>201804220258174_Add First Login Column to User Table.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804220734394_Added profile pic path column.resx">
-      <DependentUpon>201804220734394_Added profile pic path column.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201804250555520_Added ProfilePic column.resx">
+      <DependentUpon>201804250555520_Added ProfilePic column.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
