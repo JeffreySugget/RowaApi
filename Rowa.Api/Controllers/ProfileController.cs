@@ -15,7 +15,7 @@ using System.IdentityModel.Tokens.Jwt;
 namespace Rowa.Api.Controllers
 {
     [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
-    [RoutePrefix("api/user")]
+    [RoutePrefix("api/profile")]
     public class ProfileController : ApiController
     {
         private readonly IUserRepository _userRepository;
