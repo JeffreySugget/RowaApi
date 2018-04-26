@@ -242,6 +242,7 @@
     <Compile Include="Classes\ConfigurationHelper.cs" />
     <Compile Include="Classes\JwtManager.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="Entities\Secret.cs" />

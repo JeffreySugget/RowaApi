@@ -40,31 +40,6 @@ namespace Rowa.Api.Controllers
         }
 
         [HttpPost]
-        [Route("updateprofilepic")]
-        [JwtAuthentication]
-        public IHttpActionResult UpdateProfilePicture()
-        {
-            var profilePic = HttpContext.Current.Request.Files["profilePic"];
-
-            var username = _commonMethods.GetUsernameFromToken();
-
-            if (profilePic == null)
-            {
-                return Ok(HttpStatusCode.NoContent);
-            }
-
-            var path = Path.Combine("C:\\ProfilePics", profilePic.FileName);
-
-            profilePic.SaveAs(path);
-
-            AddProfilePicToDatabase(path, username);
-
-            File.Delete(path);
-
-            return Ok();
-        }
-
-        [HttpPost]
         [Route("resetpassword")]
         [AllowAnonymous]
         public IHttpActionResult ResetPassword([FromBody] UserModel userModel)
@@ -153,41 +128,6 @@ namespace Rowa.Api.Controllers
             }
 
             throw new HttpResponseException(HttpStatusCode.Unauthorized);
-        }
-
-        [HttpGet]
-        [Route("getprofilepic")]
-        [JwtAuthentication]
-        public HttpResponseMessage GetProfilePic()
-        {
-            var profilePic = _userInformationRepository.GetUserInformation(_userRepository.GetUserId(_commonMethods.GetUsernameFromToken())).ProfilePic;
-
-            var ms = new MemoryStream(profilePic);
-
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StreamContent(ms)
-            };
-
-            response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
-
-            return response;
-        }
-
-        private void AddProfilePicToDatabase(string filePath, string username)
-        {
-            var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            var reader = new BinaryReader(fs);
-
-            var photo = reader.ReadBytes((int)fs.Length);
-
-            reader.Close();
-            fs.Close();
-
-            var ui = _userInformationRepository.GetUserInformation(_userRepository.GetUserId(username));
-            ui.ProfilePic = photo;
-
-            _userInformationRepository.Update(ui);
         }
 
         private void UpdateLastLoginDate(string username)
