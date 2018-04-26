@@ -73,6 +73,16 @@ namespace Rowa.Api.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route("getuserprofile")]
+        [JwtAuthentication]
+        public IHttpActionResult GetUserProfile()
+        {
+            var username = _commonMethods.GetUsernameFromToken();
+
+            return Ok(_userRepository.GetUserProfile(username));
+        }
+
         private void AddProfilePicToDatabase(string filePath, string username)
         {
             var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
