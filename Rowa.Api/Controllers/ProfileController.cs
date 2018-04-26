@@ -83,6 +83,22 @@ namespace Rowa.Api.Controllers
             return Ok(_userRepository.GetUserProfile(username));
         }
 
+        [HttpPost]
+        [Route("updateuserprofile")]
+        [JwtAuthentication]
+        public IHttpActionResult UpdateUserProfile([FromBody] UserProfileModel userProfile)
+        {
+            var ui = _userInformationRepository.GetUserInformation(_userRepository.GetUserId(_commonMethods.GetUsernameFromToken()));
+
+            ui.FirstName = userProfile.FirstName;
+            ui.LastName = userProfile.LastName;
+            ui.Email = userProfile.Email;
+
+            _userInformationRepository.Update(ui);
+
+            return Ok();
+        }
+
         private void AddProfilePicToDatabase(string filePath, string username)
         {
             var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
