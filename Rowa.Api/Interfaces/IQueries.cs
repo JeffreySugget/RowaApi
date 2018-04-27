@@ -9,5 +9,7 @@ namespace Rowa.Api.Interfaces
     public interface IQueries
     {
         string GetUserProfile { get; }
+
+        string GetMembers { get; }
     }
 }

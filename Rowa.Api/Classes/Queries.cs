@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Rowa.Api.Repositories
+namespace Rowa.Api.Classes
 {
     public class Queries : IQueries
     {
@@ -15,5 +15,7 @@ namespace Rowa.Api.Repositories
                                         FROM [User] u
                                         INNER JOIN UserInformation ui on u.Id = ui.UserId
                                         WHERE Username=@Username";
+
+        public string GetMembers => "select Name = FirstName + ' ' + LastName from UserInformation";
     }
 }

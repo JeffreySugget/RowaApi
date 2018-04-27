@@ -242,6 +242,7 @@
     <Compile Include="Classes\ConfigurationHelper.cs" />
     <Compile Include="Classes\JwtManager.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DatabaseContext.cs" />
@@ -285,7 +286,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Classes\CommonMethods.cs" />
-    <Compile Include="Repositories\Queries.cs" />
+    <Compile Include="Classes\Queries.cs" />
     <Compile Include="Repositories\SecretRepository.cs" />
     <Compile Include="Repositories\UserInformationRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
