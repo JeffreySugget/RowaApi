@@ -36,6 +36,11 @@ namespace Rowa.Api.Controllers
         {
             var profilePic = _userInformationRepository.GetUserInformation(_userRepository.GetUserId(_commonMethods.GetUsernameFromToken())).ProfilePic;
 
+            if (profilePic == null)
+            {
+                return new HttpResponseMessage();
+            }
+
             var ms = new MemoryStream(profilePic);
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
