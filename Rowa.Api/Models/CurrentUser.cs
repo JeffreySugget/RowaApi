@@ -7,7 +7,7 @@ namespace Rowa.Api.Models
 {
     public class CurrentUser
     {
-        public string Username { get; set; }
+        public string FirstName { get; set; }
 
         public string Token { get; set; }
     }

@@ -44,7 +44,7 @@ namespace Rowa.Api.Controllers
         [AllowAnonymous]
         public IHttpActionResult ResetPassword([FromBody] UserModel userModel)
         {
-            var user = _userRepository.GetUser(userModel.Username);
+            var user = _userRepository.GetUser(userModel.EmailAddress);
 
             user.Password = _commonMethods.EncryptPassword(userModel.Password);
 
@@ -54,7 +54,7 @@ namespace Rowa.Api.Controllers
             }
             catch (Exception ex)
             {
-                throw new HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError)
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError)
                 {
                     Content = new StringContent($"Error updating password: {ex.Message}")
                 });
@@ -70,7 +70,7 @@ namespace Rowa.Api.Controllers
         {
             var newUser = new User
             {
-                Username = userModel.Username,
+                Email = userModel.EmailAddress,
                 Password = _commonMethods.EncryptPassword(userModel.Password)
             };
 
@@ -81,7 +81,7 @@ namespace Rowa.Api.Controllers
             }
             catch (Exception ex)
             {
-                throw new HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError)
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError)
                 {
                     Content = new StringContent($"Error creating user: {ex.Message}")
                 });
@@ -90,7 +90,6 @@ namespace Rowa.Api.Controllers
             {
                 FirstName = userModel.FirstName,
                 LastName = userModel.LastName,
-                Email = userModel.EmailAddress,
                 UserId = newUser.Id
             };
 
@@ -100,7 +99,7 @@ namespace Rowa.Api.Controllers
             }
             catch (Exception ex)
             {
-                throw new HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError)
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError)
                 {
                     Content = new StringContent($"Error adding user information: {ex.Message}")
                 });
@@ -118,11 +117,11 @@ namespace Rowa.Api.Controllers
             {
                 var currentUser = new CurrentUser
                 {
-                    Username = userModel.Username,
-                    Token = JwtManager.GenerateToken(userModel.Username, _secretRepository.GetSecret())
+                    FirstName = userModel.FirstName,
+                    Token = JwtManager.GenerateToken(userModel.FirstName, _secretRepository.GetSecret())
                 };
 
-                UpdateLastLoginDate(userModel.Username);
+                UpdateLastLoginDate(userModel.EmailAddress);
 
                 return Ok(currentUser);
             }
@@ -130,9 +129,9 @@ namespace Rowa.Api.Controllers
             throw new HttpResponseException(HttpStatusCode.Unauthorized);
         }
 
-        private void UpdateLastLoginDate(string username)
+        private void UpdateLastLoginDate(string email)
         {
-            var user = _userRepository.GetUser(username);
+            var user = _userRepository.GetUser(email);
 
             if (user != null)
             {
@@ -143,7 +142,7 @@ namespace Rowa.Api.Controllers
 
         private bool CheckUserForLogin(UserModel userModel)
         {
-            var user = _userRepository.LoginUser(userModel.Username, _commonMethods.EncryptPassword(userModel.Password));
+            var user = _userRepository.LoginUser(userModel.EmailAddress, _commonMethods.EncryptPassword(userModel.Password));
 
             if (user != null)
             {
@@ -155,7 +154,7 @@ namespace Rowa.Api.Controllers
 
         private bool CheckUserInDatabase(UserModel userModel)
         {
-            var user = _userRepository.CheckUserForPasswordReset(userModel.Username, userModel.EmailAddress);
+            var user = _userRepository.CheckUserForPasswordReset(userModel.EmailAddress, userModel.EmailAddress);
 
             if (user != null)
             {

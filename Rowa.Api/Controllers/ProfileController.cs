@@ -97,7 +97,6 @@ namespace Rowa.Api.Controllers
 
             ui.FirstName = userProfile.FirstName;
             ui.LastName = userProfile.LastName;
-            ui.Email = userProfile.Email;
 
             _userInformationRepository.Update(ui);
 

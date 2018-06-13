@@ -10,14 +10,14 @@ namespace Rowa.Api.Interfaces
 {
     public interface IUserRepository : IRepository<User>
     {
-        User GetUser(string username);
+        User GetUser(string email);
 
         UserProfileModel GetUserProfile(string username);
 
-        User LoginUser(string username, string password);
+        User LoginUser(string email, string password);
 
         int GetUserId(string username);
 
-        UserProfileModel CheckUserForPasswordReset(string username, string emailAddress);
+        UserProfileModel CheckUserForPasswordReset(string email, string emailAddress);
     }
 }

@@ -279,6 +279,10 @@
     <Compile Include="Migrations\201804250555520_Added ProfilePic column.Designer.cs">
       <DependentUpon>201804250555520_Added ProfilePic column.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806131246227_Update_To_Remove_Username.cs" />
+    <Compile Include="Migrations\201806131246227_Update_To_Remove_Username.Designer.cs">
+      <DependentUpon>201806131246227_Update_To_Remove_Username.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -371,6 +375,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804250555520_Added ProfilePic column.resx">
       <DependentUpon>201804250555520_Added ProfilePic column.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806131246227_Update_To_Remove_Username.resx">
+      <DependentUpon>201806131246227_Update_To_Remove_Username.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

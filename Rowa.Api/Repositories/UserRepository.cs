@@ -18,9 +18,9 @@ namespace Rowa.Api.Repositories
             _queries = queries;
         }
 
-        public User GetUser(string username)
+        public User GetUser(string email)
         {
-            return DatabaseContext.Users.FirstOrDefault(x => x.Username == username);
+            return DatabaseContext.Users.FirstOrDefault(x => x.Email == email);
         }
 
         public UserProfileModel GetUserProfile(string username)
@@ -31,27 +31,29 @@ namespace Rowa.Api.Repositories
             return userProfile;
         }
 
-        public User LoginUser(string username, string password)
+        public User LoginUser(string email, string password)
         {
-            return DatabaseContext.Users.FirstOrDefault(x => string.Equals(username, x.Username) && string.Equals(password, x.Password));
+            return DatabaseContext.Users.FirstOrDefault(x => string.Equals(email, x.Email) && string.Equals(password, x.Password));
         }
 
-        public int GetUserId(string username)
+        public int GetUserId(string email)
         {
-            return DatabaseContext.Users.FirstOrDefault(x => x.Username == username).Id;
+            return DatabaseContext.Users.FirstOrDefault(x => x.Email == email).Id;
         }
 
         public UserProfileModel CheckUserForPasswordReset(string username, string emailAddress)
         {
-            var userProfile = DatabaseContext.Database.SqlQuery<UserProfileModel>(_queries.GetUserProfile, 
-                new SqlParameter("@Username", username)).FirstOrDefault();
+            //var userProfile = DatabaseContext.Database.SqlQuery<UserProfileModel>(_queries.GetUserProfile, 
+            //    new SqlParameter("@Username", username)).FirstOrDefault();
 
-            if (userProfile.Email == emailAddress)
+            var userProfile = DatabaseContext.UserInformations.Where(x => x.User.Email == emailAddress).Select(x => new UserProfileModel
             {
-                return userProfile;
-            }
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Email = x.User.Email
+            }).FirstOrDefault();
 
-            return null;
+            return userProfile;
         }
     }
 }
