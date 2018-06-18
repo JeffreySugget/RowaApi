@@ -113,20 +113,14 @@ namespace Rowa.Api.Controllers
         [AllowAnonymous]
         public IHttpActionResult LoginUser([FromBody] UserModel userModel)
         {
-            if (CheckUserForLogin(userModel))
+            var currentUser = _userRepository.LoginUser(userModel.EmailAddress, userModel.Password);
+
+            if (currentUser.Token == null)
             {
-                var currentUser = new CurrentUser
-                {
-                    FirstName = userModel.FirstName,
-                    Token = JwtManager.GenerateToken(userModel.EmailAddress, _secretRepository.GetSecret())
-                };
-
-                UpdateLastLoginDate(userModel.EmailAddress);
-
-                return Ok(currentUser);
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
 
-            throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            return Ok(currentUser);
         }
 
         private void UpdateLastLoginDate(string email)
@@ -138,18 +132,6 @@ namespace Rowa.Api.Controllers
                 user.LastLogonDate = DateTime.Now;
                 _userRepository.Update(user);
             }
-        }
-
-        private bool CheckUserForLogin(UserModel userModel)
-        {
-            var user = _userRepository.LoginUser(userModel.EmailAddress, _commonMethods.EncryptPassword(userModel.Password));
-
-            if (user != null)
-            {
-                return true;
-            }
-
-            return false;
         }
 
         private bool CheckUserInDatabase(UserModel userModel)

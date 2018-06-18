@@ -1,4 +1,5 @@
-﻿using Rowa.Api.Entities;
+﻿using Rowa.Api.Classes;
+using Rowa.Api.Entities;
 using Rowa.Api.Interfaces;
 using Rowa.Api.Models;
 using System;
@@ -12,10 +13,14 @@ namespace Rowa.Api.Repositories
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
         private readonly IQueries _queries;
+        private readonly ISecretRepository _secretRepository;
+        private ICommonMethods _commonMethods;
 
-        public UserRepository(IQueries queries)
+        public UserRepository(IQueries queries, ISecretRepository secretRepository, ICommonMethods commonMethods)
         {
             _queries = queries;
+            _secretRepository = secretRepository;
+            _commonMethods = commonMethods;
         }
 
         public User GetUser(string email)
@@ -31,9 +36,26 @@ namespace Rowa.Api.Repositories
             return userProfile;
         }
 
-        public User LoginUser(string email, string password)
+        public CurrentUser LoginUser(string email, string password)
         {
-            return DatabaseContext.Users.FirstOrDefault(x => string.Equals(email, x.Email) && string.Equals(password, x.Password));
+            var encryptedPassword = _commonMethods.EncryptPassword(password);
+
+            var user =  DatabaseContext.UserInformations.Where(x => string.Equals(email, x.User.Email) && string.Equals(encryptedPassword, x.User.Password)).Select(x => new
+            {
+                x.FirstName,
+                x.User.Email
+            }).FirstOrDefault();
+
+            if (user == null)
+            {
+                return new CurrentUser();
+            }
+
+            return new CurrentUser
+            {
+                FirstName = user.FirstName,
+                Token = JwtManager.GenerateToken(user.Email, _secretRepository.GetSecret())
+            };
         }
 
         public int GetUserId(string email)
@@ -43,9 +65,6 @@ namespace Rowa.Api.Repositories
 
         public UserProfileModel CheckUserForPasswordReset(string username, string emailAddress)
         {
-            //var userProfile = DatabaseContext.Database.SqlQuery<UserProfileModel>(_queries.GetUserProfile, 
-            //    new SqlParameter("@Username", username)).FirstOrDefault();
-
             var userProfile = DatabaseContext.UserInformations.Where(x => x.User.Email == emailAddress).Select(x => new UserProfileModel
             {
                 FirstName = x.FirstName,
