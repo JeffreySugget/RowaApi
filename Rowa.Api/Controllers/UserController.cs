@@ -118,7 +118,7 @@ namespace Rowa.Api.Controllers
                 var currentUser = new CurrentUser
                 {
                     FirstName = userModel.FirstName,
-                    Token = JwtManager.GenerateToken(userModel.FirstName, _secretRepository.GetSecret())
+                    Token = JwtManager.GenerateToken(userModel.EmailAddress, _secretRepository.GetSecret())
                 };
 
                 UpdateLastLoginDate(userModel.EmailAddress);

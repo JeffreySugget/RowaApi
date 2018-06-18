@@ -12,7 +12,7 @@ namespace Rowa.Api.Classes
 {
     public static class JwtManager
     {
-        public static string GenerateToken(string username, string secret)
+        public static string GenerateToken(string email, string secret)
         {
             var symmetricKey = Convert.FromBase64String(secret);
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -21,7 +21,7 @@ namespace Rowa.Api.Classes
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Name, username)
+                    new Claim(ClaimTypes.Name, email)
                 }),
                 Expires = DateTime.Now.AddMinutes(Convert.ToInt32(ConfigurationManager.AppSettings["JwtExpireTime"])), 
 
