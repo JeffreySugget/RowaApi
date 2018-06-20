@@ -28,14 +28,7 @@ namespace Rowa.Api.Controllers
         [JwtAuthentication]
         public IHttpActionResult GetMembers()
         {
-            var members = new List<MemberModel>();
-
-            var names = _userInformationRepository.GetMembers();
-
-            foreach (var n in names)
-            {
-                members.Add(n);
-            }
+            var members = _userInformationRepository.GetMembers();
 
             return Ok(members);
         }
