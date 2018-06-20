@@ -1,5 +1,6 @@
 ﻿using Rowa.Api.Filters;
 using Rowa.Api.Interfaces;
+using Rowa.Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace Rowa.Api.Controllers
         [JwtAuthentication]
         public IHttpActionResult GetMembers()
         {
-            var members = new List<string>();
+            var members = new List<MemberModel>();
 
             var names = _userInformationRepository.GetMembers();
 

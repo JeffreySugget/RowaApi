@@ -12,13 +12,11 @@ namespace Rowa.Api.Repositories
 {
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        private readonly IQueries _queries;
         private readonly ISecretRepository _secretRepository;
         private ICommonMethods _commonMethods;
 
-        public UserRepository(IQueries queries, ISecretRepository secretRepository, ICommonMethods commonMethods)
+        public UserRepository(ISecretRepository secretRepository, ICommonMethods commonMethods)
         {
-            _queries = queries;
             _secretRepository = secretRepository;
             _commonMethods = commonMethods;
         }
@@ -28,10 +26,18 @@ namespace Rowa.Api.Repositories
             return DatabaseContext.Users.FirstOrDefault(x => x.Email == email);
         }
 
-        public UserProfileModel GetUserProfile(string username)
+        public UserProfileModel GetUserProfile(string email)
         {
-            var userProfile = DatabaseContext.Database.SqlQuery<UserProfileModel>(_queries.GetUserProfile, 
-                new SqlParameter("@Username", username)).FirstOrDefault();
+            //var userProfile = DatabaseContext.Database.SqlQuery<UserProfileModel>(_queries.GetUserProfile, 
+            //    new SqlParameter("@Username", username)).FirstOrDefault();
+
+            var userProfile = DatabaseContext.UserInformations.Where(x => x.User.Email == email)
+                .Select(x => new UserProfileModel
+                {
+                    Email = x.User.Email,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName
+                }).FirstOrDefault();
 
             return userProfile;
         }

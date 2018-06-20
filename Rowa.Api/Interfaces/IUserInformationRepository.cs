@@ -1,4 +1,5 @@
 ﻿using Rowa.Api.Entities;
+using Rowa.Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,6 @@ namespace Rowa.Api.Interfaces
     {
         UserInformation GetUserInformation(int userId);
 
-        IEnumerable<string> GetMembers();
+        IEnumerable<MemberModel> GetMembers();
     }
 }
