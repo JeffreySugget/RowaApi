@@ -49,6 +49,7 @@ namespace Rowa.Api.Repositories
             var user =  DatabaseContext.UserInformations.Where(x => string.Equals(email, x.User.Email) && string.Equals(encryptedPassword, x.User.Password)).Select(x => new
             {
                 x.FirstName,
+                x.LastName,
                 x.User.Email
             }).FirstOrDefault();
 
@@ -60,6 +61,7 @@ namespace Rowa.Api.Repositories
             return new CurrentUser
             {
                 FirstName = user.FirstName,
+                LastName = user.LastName,
                 Token = JwtManager.GenerateToken(user.Email, _secretRepository.GetSecret())
             };
         }
