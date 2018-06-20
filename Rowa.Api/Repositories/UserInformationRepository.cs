@@ -22,7 +22,7 @@ namespace Rowa.Api.Repositories
             var members = DatabaseContext.UserInformations
                 .Select(x => new MemberModel
                 {
-                    Name = $"{x.FirstName} {x.LastName}"
+                    Name = x.FirstName + " " + x.LastName
                 }).ToList();
 
             return members;
