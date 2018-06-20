@@ -17,8 +17,6 @@ namespace Rowa.Api.Repositories
 
         public IEnumerable<MemberModel> GetMembers()
         {
-            //var listOfString = DatabaseContext.Database.SqlQuery<string>(_queries.GetMembers).ToList();
-
             var members = DatabaseContext.UserInformations
                 .Select(x => new MemberModel
                 {

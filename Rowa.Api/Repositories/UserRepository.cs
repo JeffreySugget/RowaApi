@@ -28,9 +28,6 @@ namespace Rowa.Api.Repositories
 
         public UserProfileModel GetUserProfile(string email)
         {
-            //var userProfile = DatabaseContext.Database.SqlQuery<UserProfileModel>(_queries.GetUserProfile, 
-            //    new SqlParameter("@Username", username)).FirstOrDefault();
-
             var userProfile = DatabaseContext.UserInformations.Where(x => x.User.Email == email)
                 .Select(x => new UserProfileModel
                 {
