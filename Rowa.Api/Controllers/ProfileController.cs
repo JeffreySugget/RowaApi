@@ -34,7 +34,7 @@ namespace Rowa.Api.Controllers
         [JwtAuthentication]
         public HttpResponseMessage GetProfilePic()
         {
-            var profilePic = _userInformationRepository.GetUserInformation(_userRepository.GetUserId(_commonMethods.GetUsernameFromToken())).ProfilePic;
+            var profilePic = _userInformationRepository.GetUserInformation(_userRepository.GetUserId(_commonMethods.GetEmailFromToken())).ProfilePic;
 
             if (profilePic == null)
             {

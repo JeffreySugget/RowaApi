@@ -33,7 +33,23 @@ namespace Rowa.Api.Repositories
                 {
                     Email = x.User.Email,
                     FirstName = x.FirstName,
-                    LastName = x.LastName
+                    LastName = x.LastName,
+                    ReadOnly = false
+                }).FirstOrDefault();
+
+            return userProfile;
+        }
+
+        public UserProfileModel GetUserProfile(string firstName, string lastName)
+        {
+            var userProfile = DatabaseContext.UserInformations
+                .Where(x => x.FirstName == firstName && x.LastName == lastName)
+                .Select(x => new UserProfileModel
+                {
+                    Email = x.User.Email,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    ReadOnly = true
                 }).FirstOrDefault();
 
             return userProfile;

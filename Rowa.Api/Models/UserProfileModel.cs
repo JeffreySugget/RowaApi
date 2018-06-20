@@ -12,5 +12,7 @@ namespace Rowa.Api.Models
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public bool ReadOnly { get; set; }
     }
 }
