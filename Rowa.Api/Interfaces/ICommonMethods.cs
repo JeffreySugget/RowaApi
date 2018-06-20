@@ -10,6 +10,6 @@ namespace Rowa.Api.Interfaces
     {
         string EncryptPassword(string password);
 
-        string GetUsernameFromToken();
+        string GetEmailFromToken();
     }
 }

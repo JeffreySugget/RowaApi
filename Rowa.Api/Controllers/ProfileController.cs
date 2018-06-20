@@ -83,9 +83,9 @@ namespace Rowa.Api.Controllers
         [JwtAuthentication]
         public IHttpActionResult GetUserProfile()
         {
-            var username = _commonMethods.GetUsernameFromToken();
+            var email = _commonMethods.GetEmailFromToken();
 
-            return Ok(_userRepository.GetUserProfile(username));
+            return Ok(_userRepository.GetUserProfile(email));
         }
 
         [HttpPost]

@@ -18,7 +18,7 @@ namespace Rowa.Api.Classes
             return Convert.ToBase64String(inArray);
         }
 
-        public string GetUsernameFromToken()
+        public string GetEmailFromToken()
         {
             var token = HttpContext.Current.Request.Headers["Authorization"];
             token = token.Replace("Bearer ", "");
