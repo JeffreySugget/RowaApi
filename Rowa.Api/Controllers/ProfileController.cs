@@ -88,6 +88,16 @@ namespace Rowa.Api.Controllers
             return Ok(_userRepository.GetUserProfile(email));
         }
 
+        [HttpGet]
+        [Route("getotheruserprofile")]
+        [JwtAuthentication]
+        public IHttpActionResult GetOtherUserProfile(string name)
+        {
+            var userName = name.Split(' ');
+
+            return Ok(_userRepository.GetUserProfile(userName[0], userName[1]));
+        }
+
         [HttpPost]
         [Route("updateuserprofile")]
         [JwtAuthentication]
