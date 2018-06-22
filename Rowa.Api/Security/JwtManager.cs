@@ -8,7 +8,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web;
 
-namespace Rowa.Api.Classes
+namespace Rowa.Api.Security
 {
     public static class JwtManager
     {

@@ -32,5 +32,13 @@ namespace Rowa.Api.Controllers
 
             return Ok(members);
         }
+
+        [HttpGet]
+        [Route("updatememberrank")]
+        [JwtAuthentication]
+        public IHttpActionResult UpdateMemberRank()
+        {
+            return Ok();
+        }
     }
 }

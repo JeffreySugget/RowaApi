@@ -5,7 +5,7 @@ using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Filters;
-using Rowa.Api.Classes;
+using Rowa.Api.Security;
 using Rowa.Api.Repositories;
 
 namespace Rowa.Api.Filters

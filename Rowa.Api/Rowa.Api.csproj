@@ -240,7 +240,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Classes\ConfigurationHelper.cs" />
-    <Compile Include="Classes\JwtManager.cs" />
+    <Compile Include="Security\JwtManager.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />

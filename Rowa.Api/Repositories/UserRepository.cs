@@ -1,12 +1,8 @@
-﻿using Rowa.Api.Classes;
-using Rowa.Api.Entities;
+﻿using Rowa.Api.Entities;
 using Rowa.Api.Interfaces;
 using Rowa.Api.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
+using Rowa.Api.Security;
 using System.Linq;
-using System.Web;
 
 namespace Rowa.Api.Repositories
 {
