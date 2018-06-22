@@ -282,6 +282,10 @@
     <Compile Include="Migrations\201806131246227_Update_To_Remove_Username.Designer.cs">
       <DependentUpon>201806131246227_Update_To_Remove_Username.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806222317570_Added Rank Column.cs" />
+    <Compile Include="Migrations\201806222317570_Added Rank Column.Designer.cs">
+      <DependentUpon>201806222317570_Added Rank Column.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\MemberModel.cs" />
@@ -377,6 +381,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806131246227_Update_To_Remove_Username.resx">
       <DependentUpon>201806131246227_Update_To_Remove_Username.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806222317570_Added Rank Column.resx">
+      <DependentUpon>201806222317570_Added Rank Column.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
