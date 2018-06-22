@@ -23,8 +23,6 @@ namespace Rowa.Api.Classes
                 {
                     new Claim(ClaimTypes.Name, email)
                 }),
-                Expires = DateTime.Now.AddMinutes(Convert.ToInt32(ConfigurationManager.AppSettings["JwtExpireTime"])), 
-
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(symmetricKey), SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -48,7 +46,6 @@ namespace Rowa.Api.Classes
 
                 var validationParameters = new TokenValidationParameters()
                 {
-                    RequireExpirationTime = true,
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     IssuerSigningKey = new SymmetricSecurityKey(symmetricKey)
