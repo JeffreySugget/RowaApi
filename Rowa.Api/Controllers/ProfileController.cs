@@ -60,7 +60,7 @@ namespace Rowa.Api.Controllers
         {
             var profilePic = HttpContext.Current.Request.Files["profilePic"];
 
-            var username = _commonMethods.GetUsernameFromToken();
+            var email = _commonMethods.GetEmailFromToken();
 
             if (profilePic == null)
             {
@@ -71,7 +71,7 @@ namespace Rowa.Api.Controllers
 
             profilePic.SaveAs(path);
 
-            AddProfilePicToDatabase(path, username);
+            AddProfilePicToDatabase(path, email);
 
             File.Delete(path);
 
@@ -93,7 +93,7 @@ namespace Rowa.Api.Controllers
         [JwtAuthentication]
         public IHttpActionResult UpdateUserProfile([FromBody] UserProfileModel userProfile)
         {
-            var ui = _userInformationRepository.GetUserInformation(_userRepository.GetUserId(_commonMethods.GetUsernameFromToken()));
+            var ui = _userInformationRepository.GetUserInformation(_userRepository.GetUserId(_commonMethods.GetEmailFromToken()));
 
             ui.FirstName = userProfile.FirstName;
             ui.LastName = userProfile.LastName;
