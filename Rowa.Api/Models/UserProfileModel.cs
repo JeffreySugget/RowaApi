@@ -14,5 +14,7 @@ namespace Rowa.Api.Models
         public string LastName { get; set; }
 
         public bool ReadOnly { get; set; }
+
+        public string Rank { get; set; }
     }
 }

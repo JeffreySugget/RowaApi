@@ -34,7 +34,8 @@ namespace Rowa.Api.Repositories
                     Email = x.User.Email,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
-                    ReadOnly = false
+                    ReadOnly = false,
+                    Rank = x.Rank
                 }).FirstOrDefault();
 
             return userProfile;
@@ -49,7 +50,8 @@ namespace Rowa.Api.Repositories
                     Email = x.User.Email,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
-                    ReadOnly = true
+                    ReadOnly = true,
+                    Rank = x.Rank
                 }).FirstOrDefault();
 
             return userProfile;
