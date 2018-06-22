@@ -36,6 +36,22 @@ namespace Rowa.Api.Controllers
         {
             var profilePic = _userInformationRepository.GetUserInformation(_userRepository.GetUserId(_commonMethods.GetEmailFromToken())).ProfilePic;
 
+            return CreateResponseMessage(profilePic);
+        }
+
+        [HttpGet]
+        [Route("getotheruserprofilepic")]
+        [JwtAuthentication]
+        public HttpResponseMessage GetOtherUserProfilePic(string name)
+        {
+            var userName = name.Split(' ');
+            var profilePic = _userInformationRepository.GetUserInformation(_userRepository.GetUserId(userName[0], userName[1])).ProfilePic;
+
+            return CreateResponseMessage(profilePic);
+        }
+
+        private HttpResponseMessage CreateResponseMessage(byte[] profilePic)
+        {
             if (profilePic == null)
             {
                 return new HttpResponseMessage();

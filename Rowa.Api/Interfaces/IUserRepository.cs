@@ -18,7 +18,9 @@ namespace Rowa.Api.Interfaces
 
         CurrentUser LoginUser(string email, string password);
 
-        int GetUserId(string username);
+        int GetUserId(string email);
+
+        int GetUserId(string firstName, string lastName);
 
         UserProfileModel CheckUserForPasswordReset(string email, string emailAddress);
     }

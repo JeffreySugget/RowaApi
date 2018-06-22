@@ -84,6 +84,11 @@ namespace Rowa.Api.Repositories
             return DatabaseContext.Users.FirstOrDefault(x => x.Email == email).Id;
         }
 
+        public int GetUserId(string firstName, string lastName)
+        {
+            return DatabaseContext.UserInformations.FirstOrDefault(x => x.FirstName == firstName && x.LastName == lastName).User.Id;
+        }
+
         public UserProfileModel CheckUserForPasswordReset(string username, string emailAddress)
         {
             var userProfile = DatabaseContext.UserInformations.Where(x => x.User.Email == emailAddress).Select(x => new UserProfileModel
