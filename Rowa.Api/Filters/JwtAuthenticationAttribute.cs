@@ -41,12 +41,12 @@ namespace Rowa.Api.Filters
 
 
 
-        private static bool ValidateToken(string token, out string username)
+        private static bool ValidateToken(string token, out string email)
         {
             // TODO: FIX THIS!!!
             var repo = new SecretRepository();
 
-            username = null;
+            email = null;
 
             var simplePrinciple = JwtManager.GetPrincipal(token, repo.GetSecret());
             var identity = simplePrinciple?.Identity as ClaimsIdentity;
@@ -57,10 +57,10 @@ namespace Rowa.Api.Filters
             if (!identity.IsAuthenticated)
                 return false;
 
-            var usernameClaim = identity.FindFirst(ClaimTypes.Name);
-            username = usernameClaim?.Value;
+            var emailClaim = identity.FindFirst(ClaimTypes.Name);
+            email = emailClaim?.Value;
 
-            if (string.IsNullOrEmpty(username))
+            if (string.IsNullOrEmpty(email))
                 return false;
 
             return true;
@@ -69,11 +69,11 @@ namespace Rowa.Api.Filters
         protected Task<IPrincipal> AuthenticateJwtToken(string token)
         {
 
-            if (ValidateToken(token, out string username))
+            if (ValidateToken(token, out string email))
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, username)
+                    new Claim(ClaimTypes.Name, email)
                     // Add roles when implemented
                 };
 

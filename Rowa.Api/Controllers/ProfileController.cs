@@ -11,6 +11,7 @@ using System.Web;
 using System.Net;
 using System.IO;
 using System.IdentityModel.Tokens.Jwt;
+using Rowa.Api.Security;
 
 namespace Rowa.Api.Controllers
 {
@@ -97,6 +98,7 @@ namespace Rowa.Api.Controllers
         [HttpGet]
         [Route("getuserprofile")]
         [JwtAuthentication]
+        [RestrictedAccessAuthorise(Helpers.Rank.RoadCaptain)]
         public IHttpActionResult GetUserProfile()
         {
             var email = _commonMethods.GetEmailFromToken();
