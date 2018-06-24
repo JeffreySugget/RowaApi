@@ -24,6 +24,8 @@ namespace Rowa.Api.Repositories
 
         public UserProfileModel GetUserProfile(string email)
         {
+            var canChangeRank = CanChangeUserRank();
+
             var userProfile = DatabaseContext.UserInformations.Where(x => x.User.Email == email)
                 .Select(x => new UserProfileModel
                 {
@@ -31,7 +33,8 @@ namespace Rowa.Api.Repositories
                     FirstName = x.FirstName,
                     LastName = x.LastName,
                     ReadOnly = false,
-                    Rank = x.Rank
+                    Rank = x.Rank,
+                    CanChangeRank = canChangeRank
                 }).FirstOrDefault();
 
             return userProfile;
@@ -39,6 +42,8 @@ namespace Rowa.Api.Repositories
 
         public UserProfileModel GetUserProfile(string firstName, string lastName)
         {
+            var canChangeUserRank = CanChangeUserRank();
+
             var userProfile = DatabaseContext.UserInformations
                 .Where(x => x.FirstName == firstName && x.LastName == lastName)
                 .Select(x => new UserProfileModel
@@ -47,7 +52,8 @@ namespace Rowa.Api.Repositories
                     FirstName = x.FirstName,
                     LastName = x.LastName,
                     ReadOnly = true,
-                    Rank = x.Rank
+                    Rank = x.Rank,
+                    CanChangeRank = canChangeUserRank
                 }).FirstOrDefault();
 
             return userProfile;
@@ -97,6 +103,14 @@ namespace Rowa.Api.Repositories
             }).FirstOrDefault();
 
             return userProfile;
+        }
+
+        private bool CanChangeUserRank()
+        {
+            var email = _commonMethods.GetEmailFromToken();
+            var userId = DatabaseContext.Users.FirstOrDefault(x => x.Email == email).Id;
+
+            return DatabaseContext.UserInformations.FirstOrDefault(x => x.Id == userId).Rank == "President";
         }
     }
 }

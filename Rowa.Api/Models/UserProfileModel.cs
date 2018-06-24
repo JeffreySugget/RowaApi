@@ -16,5 +16,7 @@ namespace Rowa.Api.Models
         public bool ReadOnly { get; set; }
 
         public string Rank { get; set; }
+
+        public bool CanChangeRank { get; set; }
     }
 }

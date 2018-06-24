@@ -240,7 +240,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Classes\ConfigurationHelper.cs" />
-    <Compile Include="Helpers\Rank.cs" />
     <Compile Include="Security\JwtManager.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
@@ -298,7 +297,6 @@
     <Compile Include="Repositories\SecretRepository.cs" />
     <Compile Include="Repositories\UserInformationRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
-    <Compile Include="Security\RestrictedAccessAuthoriseAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
