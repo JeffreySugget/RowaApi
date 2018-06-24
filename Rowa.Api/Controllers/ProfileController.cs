@@ -98,7 +98,6 @@ namespace Rowa.Api.Controllers
         [HttpGet]
         [Route("getuserprofile")]
         [JwtAuthentication]
-        [RestrictedAccessAuthorise(Helpers.Rank.RoadCaptain)]
         public IHttpActionResult GetUserProfile()
         {
             var email = _commonMethods.GetEmailFromToken();
