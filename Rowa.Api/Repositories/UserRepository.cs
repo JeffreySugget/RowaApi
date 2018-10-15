@@ -33,7 +33,7 @@ namespace Rowa.Api.Repositories
                     FirstName = x.FirstName,
                     LastName = x.LastName,
                     ReadOnly = false,
-                    Rank = x.Rank,
+                    Rank = x.Rank.UserRank,
                     CanChangeRank = canChangeRank
                 }).FirstOrDefault();
 
@@ -52,7 +52,7 @@ namespace Rowa.Api.Repositories
                     FirstName = x.FirstName,
                     LastName = x.LastName,
                     ReadOnly = true,
-                    Rank = x.Rank,
+                    Rank = x.Rank.UserRank,
                     CanChangeRank = canChangeUserRank
                 }).FirstOrDefault();
 
@@ -110,7 +110,7 @@ namespace Rowa.Api.Repositories
             var email = _commonMethods.GetEmailFromToken();
             var userId = DatabaseContext.Users.FirstOrDefault(x => x.Email == email).Id;
 
-            return DatabaseContext.UserInformations.FirstOrDefault(x => x.Id == userId).Rank == "President";
+            return DatabaseContext.UserInformations.FirstOrDefault(x => x.Id == userId).Rank.UserRank == "President";
         }
     }
 }

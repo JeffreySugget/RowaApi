@@ -15,10 +15,12 @@ namespace Rowa.Api.Entities
 
         public byte[] ProfilePic { get; set; }
 
-        public string Rank { get; set; }
+        public int RankId { get; set; }
 
         public int UserId { get; set; }
 
         public virtual User User { get; set; }
+
+        public virtual Rank Rank { get; set; }
     }
 }

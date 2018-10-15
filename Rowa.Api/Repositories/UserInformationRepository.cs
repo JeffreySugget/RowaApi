@@ -21,7 +21,7 @@ namespace Rowa.Api.Repositories
                 .Select(x => new MemberModel
                 {
                     Name = x.FirstName + " " + x.LastName,
-                    Rank = x.Rank
+                    Rank = x.Rank.UserRank
                 }).ToList();
 
             return members;

@@ -18,6 +18,7 @@ namespace Rowa.Api
         public DbSet<User> Users { get; set; }
         public DbSet<UserInformation> UserInformations { get; set; }
         public DbSet<Secret> Secrets { get; set; }
+        public DbSet<Rank> Ranks { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
